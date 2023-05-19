@@ -5,8 +5,8 @@ A sample Streamlit web application for document summarization with LangChain and
 
 <img src="./langchain-pinecone-summary.png" alt="langchain-pinecone-summary"/>
 
-For a detailed tutorial on document summarization with LangChain and Pinecone, see [this post](alphasec.io/summarize-documents-with-langchain-and-pinecone).
+For a detailed tutorial on document summarization with LangChain and Pinecone, see [this post](https://alphasec.io/summarize-documents-with-langchain-and-pinecone).
 
 To deploy on [Railway](https://railway.app/?referralCode=alphasec) using a one-click template, click the button below.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/xxxxxx?referralCode=alphasec)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/Rg70kF?referralCode=alphasec)
