@@ -7,7 +7,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.document_loaders import PyPDFLoader
 
 # Streamlit app
-st.subheader('LangChain Doc Summarizer')
+st.subheader('LangChain Doc Summary')
 
 # Get OpenAI API key and source document input
 openai_api_key = st.text_input("OpenAI API Key", type="password")
