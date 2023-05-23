@@ -5,7 +5,7 @@ from langchain.llms.openai import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 
 # Streamlit app
-st.subheader('LangChain Text Summarizer')
+st.subheader('LangChain Text Summary')
 
 # Get OpenAI API key and source text input
 openai_api_key = st.text_input("OpenAI API Key", type="password")
