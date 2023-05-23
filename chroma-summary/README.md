@@ -11,4 +11,4 @@ For a detailed guide, see [this](https://alphasec.io/summarize-documents-with-la
 
 To open the Python notebook in Google Colab, click the button below.
 
-[![Open In Colab](colab.svg)](https://colab.research.google.com/github/alphasecio/langchain-examples/blob/main/chroma-summary/langchain_doc_summarizer.ipynb)
+[![Open In Colab](./../images/colab.svg)](https://colab.research.google.com/github/alphasecio/langchain-examples/blob/main/chroma-summary/langchain_doc_summarizer.ipynb)
