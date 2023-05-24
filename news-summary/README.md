@@ -12,6 +12,6 @@ Here's a sample search result using Serper API only.
 Here's a sample search result with AI-generated summaries using Serper and OpenAI APIs.
 <img src="./../images/langchain-news-summary.png" alt="langchain-news-summary"/>
 
-To deploy on [Railway](https://railway.app/?referralCode=alphasec) using a one-click template, click the button below.
+For a detailed guide, see [this](https://alphasec.io/summarize-google-news-results-with-langchain-and-serper-api) post. To deploy on [Railway](https://railway.app/?referralCode=alphasec) using a one-click template, click the button below.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/oE8sWo?referralCode=alphasec)
