@@ -24,15 +24,16 @@ if col1.button("Search"):
         st.error(f"Please provide the missing fields.")
     else:
         try:
-            # Show the top X relevant news articles from the previous week using Google Serper API
-            search = GoogleSerperAPIWrapper(type="news", tbs="qdr:w1", serper_api_key=serper_api_key)
-            result_dict = search.results(search_query)
-            
-            if not result_dict['news']:
-                st.error(f"No search results for: {search_query}.")
-            else:
-                for i, item in zip(range(num_results), result_dict['news']):
-                    st.success(f"Title: {item['title']}\n\nLink: {item['link']}\n\nSnippet: {item['snippet']}")
+            with st.spinner("Please wait..."):
+                # Show the top X relevant news articles from the previous week using Google Serper API
+                search = GoogleSerperAPIWrapper(type="news", tbs="qdr:w1", serper_api_key=serper_api_key)
+                result_dict = search.results(search_query)
+
+                if not result_dict['news']:
+                    st.error(f"No search results for: {search_query}.")
+                else:
+                    for i, item in zip(range(num_results), result_dict['news']):
+                        st.success(f"Title: {item['title']}\n\nLink: {item['link']}\n\nSnippet: {item['snippet']}")
         except Exception as e:
             st.exception(f"Exception: {e}")
 
@@ -43,16 +44,16 @@ if col2.button("Search & Summarize"):
         st.error(f"Please provide the missing fields.")
     else:
         try:
-            # Show the top X relevant news articles from the previous week using Google Serper API
-            search = GoogleSerperAPIWrapper(type="news", tbs="qdr:w1", serper_api_key=serper_api_key)
-            result_dict = search.results(search_query)
+            with st.spinner("Please wait..."):
+                # Show the top X relevant news articles from the previous week using Google Serper API
+                search = GoogleSerperAPIWrapper(type="news", tbs="qdr:w1", serper_api_key=serper_api_key)
+                result_dict = search.results(search_query)
 
-            if not result_dict['news']:
-                st.error(f"No search results for: {search_query}.")
-            else:
-                # Load URL data from the top X news search results
-                for i, item in zip(range(num_results), result_dict['news']):
-                    with st.spinner("Please wait..."):
+                if not result_dict['news']:
+                    st.error(f"No search results for: {search_query}.")
+                else:
+                    # Load URL data from the top X news search results
+                    for i, item in zip(range(num_results), result_dict['news']):
                         loader = UnstructuredURLLoader(urls=[item['link']])
                         data = loader.load()
 
