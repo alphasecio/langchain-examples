@@ -4,9 +4,6 @@ import streamlit as st
 if 'openai_api_key' not in st.session_state:
 	st.session_state.openai_api_key = ""
 
-if 'serpapi_api_key' not in st.session_state:
-	st.session_state.serpapi_api_key = ""
-
 if 'serper_api_key' not in st.session_state:
 	st.session_state.serper_api_key = ""
 
@@ -21,8 +18,9 @@ st.markdown(
     **👈 Provide the API keys in Settings, and select a use case from the sidebar to get started.**
 
     ##### Web Search
-    * A sample app for web search queries using LangChain and SerpApi.
+    * A sample app for web search queries using LangChain and Serper API.
     * References: Blog | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/search) | [Python Notebook](https://github.com/alphasecio/langchain-examples/blob/main/search/langchain_search.ipynb)
+    * *Note: The all-in-one search app has been modified to use Serper API instead of SerpApi.*
 
     ##### URL Summary
     * A sample app for summarizing URL content using LangChain and OpenAI.
