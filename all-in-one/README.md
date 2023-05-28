@@ -6,8 +6,9 @@ A multi-page Streamlit app showcasing generative AI uses cases with LangChain, O
 *Provide the API keys in Settings, and select a use case from the sidebar to get started.*
 
 #### Web Search
-* A sample app for web search queries using LangChain and SerpApi.
+* A sample app for web search queries using LangChain and Serper API.
 * References: Blog | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/search) | [Python Notebook](https://github.com/alphasecio/langchain-examples/blob/main/search/langchain_search.ipynb)
+* *Note: The all-in-one search app has been modified to use Serper API instead of SerpApi.*
 
 #### URL Summary
 * A sample app for summarizing URL content using LangChain and OpenAI.
@@ -26,4 +27,4 @@ A multi-page Streamlit app showcasing generative AI uses cases with LangChain, O
 * References: [Blog](https://alphasec.io/summarize-google-news-results-with-langchain-and-serper-api) | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/news-summary)
 
 #### Settings
-* [OpenAI API Key](https://platform.openai.com/account/api-keys) | [SERP API Key](https://serpapi.com/manage-api-key) | [Serper API Key](https://serper.dev/api-key)
+* [OpenAI API Key](https://platform.openai.com/account/api-keys) | [Serper API Key](https://serper.dev/api-key)
