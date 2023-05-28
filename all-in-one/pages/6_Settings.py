@@ -1,15 +1,5 @@
 import streamlit as st
 
-# Initialize session state variables
-if 'openai_api_key' not in st.session_state:
-	st.session_state.openai_api_key = ""
-
-if 'serpapi_api_key' not in st.session_state:
-	st.session_state.serpapi_api_key = ""
-
-if 'serper_api_key' not in st.session_state:
-	st.session_state.serper_api_key = ""
-
 # Streamlit app
 st.subheader('Settings')
 
