@@ -8,3 +8,7 @@ A sample Streamlit application to summarize URL content using LangChain and Open
 Here's a sample OpenAI-generated URL content summary. If you don't have an OpenAI API key, get it [here](https://platform.openai.com/account/api-keys).
 
 <img src="./../images/langchain-url-summary.png" alt="langchain-url-summary"/>
+
+For a detailed guide, see [this](https://alphasec.io/blinkist-for-urls-with-langchain-and-openai) post. To deploy on [Railway](https://railway.app/?referralCode=alphasec) using a one-click template, click the button below.
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/oE8sWo?referralCode=alphasec)
