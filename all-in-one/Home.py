@@ -24,7 +24,7 @@ st.markdown(
 
     ##### URL Summary
     * A sample app for summarizing URL content using LangChain and OpenAI.
-    * References: Blog | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/url-summary)
+    * References: [Blog](https://alphasec.io/blinkist-for-urls-with-langchain-and-openai) | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/url-summary)
 
     ##### Text Summary
     * A sample app for summarizing text using LangChain and OpenAI.
