@@ -1,7 +1,7 @@
 # LangChain All-In-One Demo
 A multi-page Streamlit app showcasing generative AI uses cases with LangChain, OpenAI, and others.
 
-[LangChain](https://langchain.readthedocs.io/en/latest) is an open-source framework created to aid the development of applications leveraging the power of large language models (LLMs). It can be used for chatbots, text summarisation, data generation, code understanding, question answering, evaluation, and more 🔥!
+[LangChain](https://langchain.readthedocs.io/en/latest) is an open-source framework created to aid the development of applications leveraging the power of large language models (LLMs). It can be used for chatbots, text summarisation, data generation, code understanding, question answering, evaluation, and more 🔥
 
 *Provide the API keys in Settings, and select a use case from the sidebar to get started.*
 
@@ -12,7 +12,7 @@ A multi-page Streamlit app showcasing generative AI uses cases with LangChain, O
 
 #### URL Summary
 * A sample app for summarizing URL content using LangChain and OpenAI.
-* References: Blog | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/url-summary)
+* References: [Blog](https://alphasec.io/blinkist-for-urls-with-langchain-and-openai) | [Source Code](https://github.com/alphasecio/langchain-examples/blob/main/url-summary)
 
 #### Text Summary
 * A sample app for summarizing text using LangChain and OpenAI.
