@@ -1,4 +1,4 @@
 streamlit==1.22.0
-langchain==0.0.154
+langchain==0.0.220
 openai==0.27.5
 google-search-results==2.4.2

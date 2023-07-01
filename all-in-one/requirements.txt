@@ -1,5 +1,5 @@
 streamlit==1.22.0
-langchain==0.0.177
+langchain==0.0.220
 openai==0.27.7
 tiktoken==0.4.0
 unstructured==0.6.8
