@@ -3,5 +3,5 @@ streamlit==1.22.0
 openai==0.27.7
 tiktoken==0.4.0
 chromadb==0.3.23
-pypdf==3.9.0
+pypdf==3.11.1
 pycryptodome==3.18
