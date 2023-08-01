@@ -2,5 +2,5 @@ streamlit==1.24.0
 langchain==0.0.221
 openai==0.27.8
 tiktoken==0.4.0
-pypdf==3.12.0
+pypdf==3.14.0
 pinecone-client==2.2.2

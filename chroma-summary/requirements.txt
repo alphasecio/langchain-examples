@@ -3,5 +3,5 @@ langchain==0.0.221
 openai==0.27.8
 tiktoken==0.4.0
 chromadb==0.3.26
-pypdf==3.12.0
+pypdf==3.14.0
 pycryptodome==3.18
