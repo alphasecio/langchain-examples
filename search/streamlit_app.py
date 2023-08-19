@@ -6,8 +6,11 @@ from langchain.agents import load_tools, initialize_agent
 st.subheader('LangChain Search')
 
 # Get OpenAI API key, SERP API key and search query
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-serpapi_api_key = st.text_input("SERP API Key", type="password")
+with st.sidebar:
+    openai_api_key = st.text_input("OpenAI API key", value="", type="password")
+    st.caption("*If you don't have an OpenAI API key, get it [here](https://platform.openai.com/account/api-keys).*")
+    serpapi_api_key = st.text_input("SERP API Key", type="password")
+    st.caption("*If you don't have a SERP API key, get it [here](https://serpapi.com).*")
 search_query = st.text_input("Search Query")
 
 # If the 'Search' button is clicked
