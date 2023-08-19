@@ -7,11 +7,13 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.document_loaders import PyPDFLoader
 
 # Streamlit app
-st.subheader('LangChain Doc Summary')
+st.subheader('Summarize Document')
 
 # Get OpenAI API key and source document input
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-source_doc = st.file_uploader("Upload Source Document", type="pdf")
+with st.sidebar:
+    openai_api_key = st.text_input("OpenAI API key", value="", type="password")
+    st.caption("*If you don't have an OpenAI API key, get it [here](https://platform.openai.com/account/api-keys).*")
+source_doc = st.file_uploader("Source Document", label_visibility="collapsed", type="pdf")
 
 # If the 'Summarize' button is clicked
 if st.button("Summarize"):
