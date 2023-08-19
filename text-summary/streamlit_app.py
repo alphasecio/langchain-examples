@@ -5,11 +5,13 @@ from langchain.llms.openai import OpenAI
 from langchain.chains.summarize import load_summarize_chain
 
 # Streamlit app
-st.subheader('LangChain Text Summary')
+st.subheader('Summarize Text')
 
 # Get OpenAI API key and source text input
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-source_text = st.text_area("Source Text", height=200)
+with st.sidebar:
+    openai_api_key = st.text_input("OpenAI API key", value="", type="password")
+    st.caption("*If you don't have an OpenAI API key, get it [here](https://platform.openai.com/account/api-keys).*")
+source_text = st.text_area("Source Text", label_visibility="collapsed", height=200)
 
 # If the 'Summarize' button is clicked
 if st.button("Summarize"):
