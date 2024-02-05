@@ -3,6 +3,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.utilities import GoogleSerperAPIWrapper
 from langchain.document_loaders import UnstructuredURLLoader
 from langchain.chains.summarize import load_summarize_chain
+from langchain.prompts import PromptTemplate
 
 # Streamlit app
 st.subheader('Last Week In...')
@@ -54,14 +55,20 @@ if col2.button("Search & Summarize"):
                 else:
                     # Load URL data from the top X news search results
                     for i, item in zip(range(num_results), result_dict['news']):
-                        loader = UnstructuredURLLoader(urls=[item['link']])
+                        loader = UnstructuredURLLoader(urls=[item['link']], ssl_verify=False, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"})
                         data = loader.load()
-
+                
                         # Initialize the ChatOpenAI module, load and run the summarize chain
-                        llm = ChatOpenAI(temperature=0, model='gpt-3.5-turbo', openai_api_key=openai_api_key)
-                        chain = load_summarize_chain(llm, chain_type="map_reduce")
+                        llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
+                        prompt_template = """Write a summary of the following in 100-150 words:
+                            
+                            {text}
+        
+                        """
+                        prompt = PromptTemplate(template=prompt_template, input_variables=["text"])
+                        chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt)
                         summary = chain.run(data)
-
+        
                         st.success(f"Title: {item['title']}\n\nLink: {item['link']}\n\nSummary: {summary}")
         except Exception as e:
             st.exception(f"Exception: {e}")
