@@ -1,9 +1,9 @@
-streamlit==1.25.0
-langchain==0.0.268
-openai==0.27.8
-tiktoken==0.4.0
-unstructured==0.10.4
+streamlit==1.31.0
+langchain==0.1.5
+openai==1.11.1
+tiktoken==0.5.2
+unstructured==0.11.8
 tabulate==0.9.0
-pdf2image==1.16.3
+pdf2image==1.17.0
 pytesseract==0.3.10
 google-search-results==2.4.2
