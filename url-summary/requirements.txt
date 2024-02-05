@@ -1,10 +1,10 @@
-streamlit==1.26.0
-langchain==0.0.279
-openai==0.28.0
-tiktoken==0.4.0
-unstructured==0.10.12
+streamlit==1.31.0
+langchain==0.1.5
+openai==1.11.1
+tiktoken==0.5.2
+unstructured==0.11.8
 tabulate==0.9.0
-pdf2image==1.16.3
+pdf2image==1.17.0
 pytesseract==0.3.10
 pytube==15.0.0
-youtube-transcript-api==0.6.1
+youtube-transcript-api==0.6.2
