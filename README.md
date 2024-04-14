@@ -42,6 +42,9 @@ A sample Streamlit web application for document summarization with LangChain and
 ### [search](https://github.com/alphasecio/langchain-examples/blob/main/search)
 A sample Streamlit web application for search queries using LangChain and SerpApi.
 
+### [search-tavily](https://github.com/alphasecio/langchain-examples/blob/main/search-tavily)
+A sample Streamlit web application for search queries using LangChain and Tavily Search API.
+
 ### [text-summary](https://github.com/alphasecio/langchain-examples/blob/main/text-summary)
 A sample Streamlit web application for summarizing text using LangChain and OpenAI.
 
