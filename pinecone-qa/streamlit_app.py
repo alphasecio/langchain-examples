@@ -32,32 +32,33 @@ if submit:
     if not openai_api_key or not pinecone_api_key or not pinecone_index or not source_doc or not query:
         st.warning(f"Please upload the document and provide the missing fields.")
     else:
-        # Check if it's the same document; if not or if retriever isn't set, reload and recompute
-        if st.session_state.loaded_doc != source_doc:
+        with st.spinner("Please wait..."):
+            # Check if it's the same document; if not or if retriever isn't set, reload and recompute
+            if st.session_state.loaded_doc != source_doc:
+                try:
+                    # Save uploaded file temporarily to disk, load and split the file into pages, delete temp file
+                    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+                        tmp_file.write(source_doc.read())
+                    loader = PyPDFLoader(tmp_file.name)
+                    pages = loader.load_and_split()
+                    os.unlink(tmp_file.name)
+    
+                    # Generate embeddings for the pages, insert into Pinecone vector database, and expose the index in a retriever interface
+                    embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+                    vectorstore = PineconeVectorStore.from_documents(pages, embeddings, index_name=pinecone_index)
+                    st.session_state.retriever = vectorstore.as_retriever()
+    
+                    # Store the uploaded file in session state to prevent reloading
+                    st.session_state.loaded_doc = source_doc
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
+    
             try:
-                # Save uploaded file temporarily to disk, load and split the file into pages, delete temp file
-                with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-                    tmp_file.write(source_doc.read())
-                loader = PyPDFLoader(tmp_file.name)
-                pages = loader.load_and_split()
-                os.unlink(tmp_file.name)
-
-                # Generate embeddings for the pages, insert into Pinecone vector database, and expose the index in a retriever interface
-                embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
-                vectorstore = PineconeVectorStore.from_documents(pages, embeddings, index_name=pinecone_index)
-                st.session_state.retriever = vectorstore.as_retriever()
-
-                # Store the uploaded file in session state to prevent reloading
-                st.session_state.loaded_doc = source_doc
+                # Initialize the OpenAI module, load and run the Retrieval Q&A chain
+                llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
+                qa = RetrievalQA.from_chain_type(llm, chain_type="stuff", retriever=st.session_state.retriever)
+                response = qa.run(query)
+                
+                st.success(response)
             except Exception as e:
                 st.error(f"An error occurred: {e}")
-
-        try:
-            # Initialize the OpenAI module, load and run the Retrieval Q&A chain
-            llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
-            qa = RetrievalQA.from_chain_type(llm, chain_type="stuff", retriever=st.session_state.retriever)
-            response = qa.run(query)
-            
-            st.success(response)
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
