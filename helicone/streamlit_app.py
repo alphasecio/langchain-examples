@@ -1,10 +1,8 @@
-import openai, streamlit as st
-from langchain.llms.openai import OpenAI
-
-openai.api_base = "https://oai.hconeai.com/v1"
+import streamlit as st
+from langchain_openai import OpenAI
 
 # Streamlit app
-st.subheader('LLM Observability Demo')
+st.subheader('LLM Observability with Helicone')
 
 # Get OpenAI API key, Helicone API key, and user query
 with st.sidebar:
@@ -24,7 +22,8 @@ if st.button("Submit"):
                 llm = OpenAI(
                   temperature=0.9, 
                   openai_api_key=openai_api_key, 
-                  headers={
+                  base_url="https://oai.hconeai.com/v1",
+                  default_headers={
                     "Helicone-Auth": f"Bearer {helicone_api_key}",
                     "Helicone-Cache-Enabled": "true"
                   }
