@@ -1,5 +1,5 @@
 import streamlit as st
-from langchain_openai import OpenAI
+from langchain_openai import ChatOpenAI
 from langchain.agents import load_tools, initialize_agent
 
 # Set API keys from session state
@@ -21,7 +21,7 @@ if st.button("Search"):
         try:
             with st.spinner('Please wait...'):
               # Initialize the OpenAI module, load the Google Serper API tool, and run the search query using an agent
-              llm = OpenAI(temperature=0, openai_api_key=openai_api_key, verbose=True)
+              llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key, verbose=True)
               tools = load_tools(["google-serper"], llm, serper_api_key=serper_api_key)
               agent = initialize_agent(tools, llm, agent="zero-shot-react-description", verbose=True)
               result = agent.run(search_query)
