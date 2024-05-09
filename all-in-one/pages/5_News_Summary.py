@@ -1,9 +1,9 @@
-import streamlit as st, tiktoken
-from langchain.chat_models import ChatOpenAI
-from langchain.utilities import GoogleSerperAPIWrapper
-from langchain.document_loaders import UnstructuredURLLoader
-from langchain.chains.summarize import load_summarize_chain
+import streamlit as st
 from langchain.prompts import PromptTemplate
+from langchain.chains.summarize import load_summarize_chain
+from langchain_openai import ChatOpenAI
+from langchain_community.document_loaders import  UnstructuredURLLoader
+from langchain_community.utilities import GoogleSerperAPIWrapper
 
 # Set API keys from session state
 openai_api_key = st.session_state.openai_api_key
@@ -11,12 +11,13 @@ serper_api_key = st.session_state.serper_api_key
 
 # Streamlit app
 st.subheader('News Summary')
-num_results = st.number_input("Number of Search Results", min_value=3, max_value=10) 
-search_query = st.text_input("Enter Search Query")
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([3, 1])
+search_query = col1.text_input("Search Query")
+num_results = col2.number_input("Number of Results", min_value=3, max_value=10) 
+col3, col4 = st.columns([1, 3])
 
 # If the 'Search' button is clicked
-if col1.button("Search"):
+if col3.button("Search"):
     # Validate inputs
     if not openai_api_key or not serper_api_key:
         st.error("Please provide the missing API keys in Settings.")
@@ -38,7 +39,7 @@ if col1.button("Search"):
             st.exception(f"Exception: {e}")
 
 # If 'Search & Summarize' button is clicked
-if col2.button("Search & Summarize"):
+if col4.button("Search & Summarize"):
     # Validate inputs
     if not openai_api_key or not serper_api_key:
         st.error("Please provide the missing API keys in Settings.")
