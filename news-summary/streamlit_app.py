@@ -1,9 +1,9 @@
-import streamlit as st, tiktoken
-from langchain.chat_models import ChatOpenAI
-from langchain.utilities import GoogleSerperAPIWrapper
-from langchain.document_loaders import UnstructuredURLLoader
-from langchain.chains.summarize import load_summarize_chain
+import streamlit as st
 from langchain.prompts import PromptTemplate
+from langchain.chains.summarize import load_summarize_chain
+from langchain_openai import ChatOpenAI
+from langchain_community.document_loaders import  UnstructuredURLLoader
+from langchain_community.utilities import GoogleSerperAPIWrapper
 
 # Streamlit app
 st.subheader('Last Week In...')
@@ -16,7 +16,7 @@ with st.sidebar:
     st.caption("*Search: Uses Serper API only, retrieves search results.*")
     st.caption("*Search & Summarize: Uses Serper & OpenAI APIs, summarizes each search result.*")
 search_query = st.text_input("Search Query", label_visibility="collapsed")
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1,3])
 
 # If the 'Search' button is clicked
 if col1.button("Search"):
