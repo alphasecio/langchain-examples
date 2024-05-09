@@ -1,4 +1,4 @@
-import os, streamlit as st
+import streamlit as st
 from langchain.chains.summarize import load_summarize_chain
 from langchain_openai import ChatOpenAI
 from langchain_community.docstore.document import Document
