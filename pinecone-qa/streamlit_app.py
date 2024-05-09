@@ -1,45 +1,61 @@
-import os, tempfile
-import streamlit as st, pinecone
-from langchain.llms.openai import OpenAI
-from langchain.vectorstores.pinecone import Pinecone
-from langchain.embeddings.openai import OpenAIEmbeddings
+import os, tempfile, streamlit as st
+from langchain_pinecone import PineconeVectorStore
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.chains import RetrievalQA
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 
 # Streamlit app
-st.subheader('Generative Q&A with LangChain & Pinecone')
-            
-# Get OpenAI API key, Pinecone API key and environment, and source document input
+st.subheader("Generative Q&A with LangChain & Pinecone")
+
+# Sidebar for settings and source file upload
 with st.sidebar:
+    st.subheader("Settings")
     openai_api_key = st.text_input("OpenAI API key", type="password")
     pinecone_api_key = st.text_input("Pinecone API key", type="password")
-    pinecone_env = st.text_input("Pinecone environment")
     pinecone_index = st.text_input("Pinecone index name")
-source_doc = st.file_uploader("Upload source document", type="pdf", label_visibility="collapsed")
+    source_doc = st.file_uploader("Source document", type="pdf")
 query = st.text_input("Enter your query")
 
-if st.button("Submit"):
+# Set environment variables for API keys
+os.environ['OPENAI_API_KEY'] = openai_api_key
+os.environ['PINECONE_API_KEY'] = pinecone_api_key
+
+# Session state initialization for documents and retrievers
+if 'retriever' not in st.session_state or 'loaded_doc' not in st.session_state:
+    st.session_state.retriever = None
+    st.session_state.loaded_doc = None
+
+submit = st.button("Submit")
+
+if submit:
     # Validate inputs
-    if not openai_api_key or not pinecone_api_key or not pinecone_env or not pinecone_index or not source_doc or not query:
+    if not openai_api_key or not pinecone_api_key or not pinecone_index or not source_doc or not query:
         st.warning(f"Please upload the document and provide the missing fields.")
     else:
-        try:
-            # Save uploaded file temporarily to disk, load and split the file into pages, delete temp file
-            with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-                tmp_file.write(source_doc.read())
-            loader = PyPDFLoader(tmp_file.name)
-            pages = loader.load_and_split()
-            os.remove(tmp_file.name)
-            
-            # Generate embeddings for the pages, insert into Pinecone vector database, and expose the index in a retriever interface
-            pinecone.init(api_key=pinecone_api_key, environment=pinecone_env)
-            embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
-            vectordb = Pinecone.from_documents(pages, embeddings, index_name=pinecone_index)
-            retriever = vectordb.as_retriever()
+        # Check if it's the same document; if not or if retriever isn't set, reload and recompute
+        if st.session_state.loaded_doc != source_doc:
+            try:
+                # Save uploaded file temporarily to disk, load and split the file into pages, delete temp file
+                with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+                    tmp_file.write(source_doc.read())
+                loader = PyPDFLoader(tmp_file.name)
+                pages = loader.load_and_split()
+                os.unlink(tmp_file.name)
 
+                # Generate embeddings for the pages, insert into Pinecone vector database, and expose the index in a retriever interface
+                embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+                vectorstore = PineconeVectorStore.from_documents(pages, embeddings, index_name=pinecone_index)
+                st.session_state.retriever = vectorstore.as_retriever()
+
+                # Store the uploaded file in session state to prevent reloading
+                st.session_state.loaded_doc = source_doc
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+
+        try:
             # Initialize the OpenAI module, load and run the Retrieval Q&A chain
-            llm = OpenAI(temperature=0, openai_api_key=openai_api_key)
-            qa = RetrievalQA.from_chain_type(llm, chain_type="stuff", retriever=retriever)
+            llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
+            qa = RetrievalQA.from_chain_type(llm, chain_type="stuff", retriever=st.session_state.retriever)
             response = qa.run(query)
             
             st.success(response)
