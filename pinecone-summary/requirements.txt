@@ -1,6 +1,7 @@
-streamlit==1.25.0
-langchain==0.0.268
-openai==0.27.8
-tiktoken==0.4.0
-pypdf==3.15.1
-pinecone-client==2.2.2
+streamlit==1.33.0
+langchain==0.1.19
+langchain-openai==0.1.6
+langchain-pinecone==0.1.0
+langchain-community==0.0.38
+pinecone-client>=3.2.2,<4.0.0
+pypdf==4.2.0
