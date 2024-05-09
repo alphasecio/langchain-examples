@@ -1,10 +1,8 @@
-import os, tempfile
-import streamlit as st
-from langchain.llms.openai import OpenAI
-from langchain.vectorstores.chroma import Chroma
-from langchain.embeddings.openai import OpenAIEmbeddings
+import os, tempfile, streamlit as st
+from langchain_chroma import Chroma
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 
 # Streamlit app
 st.subheader('Summarize Document')
@@ -12,7 +10,6 @@ st.subheader('Summarize Document')
 # Get OpenAI API key and source document input
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API key", value="", type="password")
-    st.caption("*If you don't have an OpenAI API key, get it [here](https://platform.openai.com/account/api-keys).*")
 source_doc = st.file_uploader("Source Document", label_visibility="collapsed", type="pdf")
 
 # If the 'Summarize' button is clicked
@@ -31,11 +28,11 @@ if st.button("Summarize"):
               os.remove(tmp_file.name)
 
               # Create embeddings for the pages and insert into Chroma database
-              embeddings=OpenAIEmbeddings(openai_api_key=openai_api_key)
+              embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
               vectordb = Chroma.from_documents(pages, embeddings)
 
               # Initialize the OpenAI module, load and run the summarize chain
-              llm=OpenAI(temperature=0, openai_api_key=openai_api_key)
+              llm = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
               chain = load_summarize_chain(llm, chain_type="stuff")
               search = vectordb.similarity_search(" ")
               summary = chain.run(input_documents=search, question="Write a summary within 200 words.")
