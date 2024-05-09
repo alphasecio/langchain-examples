@@ -1,5 +1,5 @@
 import streamlit as st
-from langchain.llms.openai import OpenAI
+from langchain_openai import OpenAI
 from langchain.agents import load_tools, initialize_agent
 
 # Set API keys from session state
