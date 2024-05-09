@@ -1,8 +1,8 @@
 import validators, streamlit as st
-from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import YoutubeLoader, UnstructuredURLLoader
-from langchain.chains.summarize import load_summarize_chain
 from langchain.prompts import PromptTemplate
+from langchain.chains.summarize import load_summarize_chain
+from langchain_openai import ChatOpenAI
+from langchain_community.document_loaders import YoutubeLoader, UnstructuredURLLoader
 
 # Set API keys from session state
 openai_api_key = st.session_state.openai_api_key
