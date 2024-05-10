@@ -7,7 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmb
 from langchain_community.document_loaders import PyPDFLoader
 
 # Streamlit app config
-st.subheader("Generative Q&A with Gemini, LangChain & Chroma")
+st.subheader("Generative Q&A with LangChain, Gemini and Chroma")
 with st.sidebar:
     google_api_key = st.text_input("Google API key", type="password")
     source_doc = st.file_uploader("Source document", type="pdf")
