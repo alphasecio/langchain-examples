@@ -50,6 +50,14 @@ def _pin(url: str) -> tuple[str, dict, dict]:
 
 
 def _download(url: str) -> tuple[bytes, str, str]:
+    try:
+        return _fetch(url)
+    except httpx.HTTPError as error:
+        message = "The site's certificate could not be verified." if "CERTIFICATE" in str(error) else "Could not reach that page."
+        raise FetchError(message) from None
+
+
+def _fetch(url: str) -> tuple[bytes, str, str]:
     with httpx.Client(timeout=20.0, follow_redirects=False, headers=HEADERS, trust_env=False) as client:
         for _ in range(MAX_REDIRECTS + 1):
             pinned, headers, extensions = _pin(url)
