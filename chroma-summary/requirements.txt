@@ -1,6 +1,0 @@
-streamlit==1.33.0
-langchain==0.1.19
-langchain-openai==0.1.6
-langchain-chroma==0.1.0
-pypdf==4.2.0
-pycryptodome==3.20.0
