@@ -240,9 +240,17 @@ def _pc_search(query: str, k: int) -> list[Document]:
     if response is None:
         return []
     return [
-        Document(page_content=m.get("text") or "", metadata={"source": m.get("source"), "page": m.get("page")})
+        Document(page_content=m.get("text") or "", metadata={"source": m.get("source"), "page": _page(m.get("page"))})
         for m in response.matches
     ]
+
+
+def _page(value) -> int | None:
+    # Pinecone stores numbers as floats, so 1 comes back as 1.0.
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
 
 
 def _pc_list_sources() -> list[tuple[str, int]]:
