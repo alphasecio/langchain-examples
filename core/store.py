@@ -115,7 +115,7 @@ def _pinecone_errors(error: Exception) -> StoreError:
     if isinstance(error, RateLimitError):
         return StoreError("Pinecone rate limit reached; try again shortly.")
     if isinstance(error, PineconeError):
-        return StoreError(f"Pinecone request failed ({error.__class__.__name__}).")
+        return StoreError(f"Pinecone request failed: {str(error)[:300]}")
     return StoreError(str(error))
 
 
