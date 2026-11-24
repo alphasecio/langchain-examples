@@ -4,7 +4,10 @@ import os
 import streamlit as st
 
 from core.search import PROVIDERS
-from core.settings import DIGITALOCEAN_URL, MODELS, RAILWAY_URL, REPO_URL, default_model, env_key
+from core.settings import DIGITALOCEAN_URL, MODELS, RAILWAY_URL, REPO_URL, default_model, env_key, vector_store
+
+
+SERVER_KEYS = ("OPENAI_API_KEY", "PINECONE_API_KEY", *(p.env for p in PROVIDERS.values()))
 
 
 def require_password() -> None:
@@ -43,7 +46,9 @@ def sidebar() -> None:
         st.selectbox("Search provider", list(PROVIDERS), key="provider", format_func=lambda p: PROVIDERS[p].name)
         provider = PROVIDERS[st.session_state.provider]
         _key_input(provider.env, provider.name, provider.signup)
-        if not os.getenv("APP_PASSWORD") and env_key("OPENAI_API_KEY"):
+        if vector_store() == "pinecone":
+            _key_input("PINECONE_API_KEY", "Pinecone", "https://app.pinecone.io")
+        if not os.getenv("APP_PASSWORD") and any(env_key(k) for k in SERVER_KEYS):
             st.warning("Server-side keys are set without APP_PASSWORD, so anyone with this URL can use them.")
         st.divider()
         st.caption("Keys entered here stay in your browser session and are never stored.")

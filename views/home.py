@@ -1,5 +1,6 @@
 import streamlit as st
 
+from core.settings import vector_store_label
 from core.ui import footer, header
 
 header(
@@ -15,7 +16,7 @@ cards = [
     ("views/news.py", "📰 News Digest",
      "Pick a topic and a time window. Get the top stories, each summarized, plus a one-paragraph digest."),
     ("views/docs.py", "📚 Chat with Docs",
-     "Upload PDFs or text files into a Postgres vector store and ask questions with cited answers."),
+     f"Upload PDFs or text files into a {vector_store_label()} vector store and ask questions with cited answers."),
 ]
 
 columns = st.columns(2)

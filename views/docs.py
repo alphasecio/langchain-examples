@@ -5,6 +5,7 @@ from langchain_core.documents import Document
 
 from core import store, web
 from core.llm import chat_model
+from core.settings import vector_store_label
 from core.ui import footer, header, show_error
 
 PROMPT = """Answer the question using only the numbered context below. Cite sources inline as [1], [2].
@@ -26,7 +27,7 @@ def _to_documents(upload) -> list[Document]:
     return [Document(page_content=data.decode("utf-8", errors="replace"), metadata={"source": name, "page": 1})]
 
 
-header("📚 Chat with Docs", "Upload documents into a Postgres vector store and ask questions with cited answers.")
+header("📚 Chat with Docs", f"Upload documents into a {vector_store_label()} vector store and ask questions with cited answers.")
 
 with st.expander("Library", expanded=True):
     uploads = st.file_uploader("Add documents", type=["pdf", "txt", "md"], accept_multiple_files=True)

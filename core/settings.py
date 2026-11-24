@@ -19,6 +19,18 @@ def get_key(name: str) -> str:
     return st.session_state.get(f"key_{name}", "").strip() or env_key(name)
 
 
+VECTOR_STORES = {"pgvector": "Postgres", "pinecone": "Pinecone"}
+
+
+def vector_store() -> str:
+    """The configured vector store: VECTOR_STORE=pgvector (default) or pinecone."""
+    return env_key("VECTOR_STORE").lower() or "pgvector"
+
+
+def vector_store_label() -> str:
+    return VECTOR_STORES.get(vector_store(), vector_store())
+
+
 def default_model() -> str:
     model = env_key("OPENAI_MODEL")
     return model if model else MODELS[0]

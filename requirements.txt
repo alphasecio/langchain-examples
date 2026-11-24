@@ -3,6 +3,7 @@ langchain==1.5.0
 langchain-core==1.8.2
 langchain-openai==1.8.1
 langchain-postgres==0.0.19
+pinecone==10.3.0
 langchain-text-splitters==1.1.3
 psycopg[binary]==3.3.9
 pypdf==7.1.0

@@ -17,26 +17,32 @@
   </a>
 </h4>
 
-A single Streamlit app with four practical [LangChain](https://docs.langchain.com) tools, using OpenAI models, your choice of web search provider, and Postgres with pgvector for document storage.
+A single Streamlit app with four practical [LangChain](https://docs.langchain.com) tools, using OpenAI models, your choice of web search provider, and Postgres with pgvector (or Pinecone) for document storage.
 
 | Tool | What it does |
 | --- | --- |
 | 🔎 **Web Research** | An agent that searches the web, reads pages and answers with cited sources. |
 | 📝 **Summarize** | Summarizes pasted text, a web page or a PDF, as a short summary, a detailed one or bullet points. |
 | 📰 **News Digest** | Finds top stories on any topic, summarizes each, and writes a one-paragraph digest. |
-| 📚 **Chat with Docs** | Stores PDF, text and Markdown files in a Postgres vector store and answers questions with page-level citations. |
+| 📚 **Chat with Docs** | Stores PDF, text and Markdown files in a vector store (Postgres with pgvector, or Pinecone) and answers questions with page-level citations. |
 
 ## Deploy
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/oE8sWo?referralCode=alphasec)
+| Vector store | Railway template |
+| --- | --- |
+| Postgres with pgvector (default) | [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/oE8sWo?referralCode=alphasec) |
+| Pinecone | [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/Rg70kF?referralCode=alphasec) |
 
-The template deploys the app and a Postgres database with pgvector. Add your OpenAI key and at least one search provider key, and you're ready. It also runs on any VPS with Docker and Postgres, such as a [DigitalOcean](https://m.do.co/c/5552e11c260f) droplet.
+The pgvector template deploys the app and a Postgres database. The Pinecone template deploys only the app and creates a serverless index in your Pinecone project on first use. Add your OpenAI key and at least one search provider key, and you're ready. It also runs on any VPS with Docker, such as a [DigitalOcean](https://m.do.co/c/5552e11c260f) droplet.
 
 ## Configuration
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `DATABASE_URL` | Yes | Postgres connection string. The pgvector extension and `documents` table are created on first use. |
+| `VECTOR_STORE` | No | `pgvector` (default) or `pinecone`. |
+| `DATABASE_URL` | pgvector only | Postgres connection string. The pgvector extension and `documents` table are created on first use. |
+| `PINECONE_API_KEY` | Pinecone only | [Pinecone API key](https://app.pinecone.io). Can also be entered in the sidebar. |
+| `PINECONE_INDEX` | No | Pinecone index name, default `langchain-examples`. If it doesn't exist, a serverless index (1536 dimensions, cosine, AWS `us-east-1`) is created. |
 | `OPENAI_API_KEY` | Yes | [OpenAI API key](https://platform.openai.com/api-keys). |
 | `OPENAI_MODEL` | No | Default model, e.g. `gpt-6.1-terra`. Users can switch models in the sidebar. |
 | `OPENAI_BASE_URL` | No | An OpenAI-compatible endpoint, if you don't call OpenAI directly. |
